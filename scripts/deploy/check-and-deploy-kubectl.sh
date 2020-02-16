@@ -127,12 +127,11 @@ NEW_DEPLOYMENT_FILE="$(dirname $DEPLOYMENT_FILE)/tmp.$(basename $DEPLOYMENT_FILE
 
 echo "$deployment_content" > $NEW_DEPLOYMENT_FILE
 DEPLOYMENT_FILE=${NEW_DEPLOYMENT_FILE} # use modified file
-cat ${DEPLOYMENT_FILE}
 
 echo "=========================================================="
 echo "DEPLOYING using manifest"
 set -x
-kubectl apply --namespace ${CLUSTER_NAMESPACE} -f ${DEPLOYMENT_FILE} 
+kubectl apply --namespace ${CLUSTER_NAMESPACE} -f ${NEW_DEPLOYMENT_FILE} 
 set +x
 # Extract name from actual Kube deployment resource owning the deployed container image 
 # Ensure that the image match the repository, image name and tag without the @ sha id part to handle
