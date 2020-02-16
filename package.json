@@ -1,0 +1,12 @@
+{
+  "name": "ibm-cloud-cd-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kyujin-cho/ibm-cloud-cd-test",
+  "author": "Kyujin Cho <kyujin.cho@lablup.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^8.0.8"
+  }
+}
