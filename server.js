@@ -5,7 +5,7 @@ const koaRouter = require('koa-router')
 const app = new koa()
 const router = new koaRouter()
 
-const version = '1'
+const { version } = require('./package.json')
 const PORT = parseInt(process.env.NODE_PORT) || 3000
 
 router.get('/', async ctx => {

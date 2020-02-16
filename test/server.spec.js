@@ -3,6 +3,7 @@ const { expect } = chai
 const chaiHttp = require('chai-http')
 
 const { server } = require('../server')
+const { version } = require('../package.json')
 
 chai.use(chaiHttp)
 describe('basic routes', () => {
@@ -24,7 +25,7 @@ describe('basic routes', () => {
       .end((err, res) => {
         expect(res).to.have.status(200)
         expect(res.body).to.have.property('message', 'CD Version')
-        expect(res.body).to.have.property('version')
+        expect(res.body).to.have.property('version', version)
         done()
       })
   })
