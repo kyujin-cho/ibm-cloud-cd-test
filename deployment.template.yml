@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: %s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: %s
+  template:
+    metadata:
+      labels:
+        app: %s
+    spec:
+      containers:
+        - name: %s
+          image: %s
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: %s
+          livenessProbe:
+            httpGet:
+              path: /version
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: %s
+  labels:
+    app: %s
+spec:
+  type: NodePort
+  ports:
+    - port: %s
+  selector:
+    app: %s
