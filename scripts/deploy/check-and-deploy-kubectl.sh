@@ -123,20 +123,9 @@ application_name=$(echo ${IDS_PROJECT_NAME} | tr -cd '[:alnum:].-')
 printf "$deployment_content" \
 "${application_name}" "${application_name}" "${application_name}" "${application_name}" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}" "${PORT}" \
 "${application_name}" "${application_name}" "${PORT}" "${application_name}"
-
-echo "=========================================================="
-echo "UPDATING manifest with image information"
-IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
-echo -e "Updating ${DEPLOYMENT_FILE} with image name: ${IMAGE_REPOSITORY}:${IMAGE_TAG}"
 NEW_DEPLOYMENT_FILE="$(dirname $DEPLOYMENT_FILE)/tmp.$(basename $DEPLOYMENT_FILE)"
-# find the yaml document index for the K8S deployment definition
-DEPLOYMENT_DOC_INDEX=$(yq read --doc "*" --tojson $DEPLOYMENT_FILE | jq -r 'to_entries | .[] | select(.value.kind | ascii_downcase=="deployment") | .key')
-if [ -z "$DEPLOYMENT_DOC_INDEX" ]; then
-  echo "No Kubernetes Deployment definition found in $DEPLOYMENT_FILE. Updating YAML document with index 0"
-  DEPLOYMENT_DOC_INDEX=0
-fi
-# Update deployment with image name
-yq write $DEPLOYMENT_FILE --doc $DEPLOYMENT_DOC_INDEX "spec.template.spec.containers[0].image" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}" > ${NEW_DEPLOYMENT_FILE}
+
+echo "$deployment_content" > $NEW_DEPLOYMENT_FILE
 DEPLOYMENT_FILE=${NEW_DEPLOYMENT_FILE} # use modified file
 cat ${DEPLOYMENT_FILE}
 
