@@ -122,6 +122,7 @@ echo "GENERATED ${DEPLOYMENT_FILE}:"
 application_name=$(echo ${IDS_PROJECT_NAME} | tr -cd '[:alnum:].-')
 printf "$deployment_content" \
 "${application_name}" "${application_name}" "${application_name}" "${application_name}" "${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}" "${PORT}" \
+"${application_name}" "${application_name}" "${PORT}" "${application_name}"
 fi
 
 echo "=========================================================="
